@@ -1,12 +1,13 @@
 let buttonsColors = ["green", "red", "yellow", "blue"]
 let gamePattern = []
 let userClickedPattern = []
-
+let level = 0;
 
 
 $(document).keypress(function () {
+    nextLevel()
     fillGamePattern()
-    $("h1").text("Level 1")
+    $("h1").text("Level " + level)
     for (i = 0; i <= gamePattern.length; i++) {
         $("#" + gamePattern[i]).animate({ opacity: 0.1 }, "slow")
         $("#" + gamePattern[i]).animate({ opacity: 1 }, "slow")
@@ -19,6 +20,7 @@ $(document).keypress(function () {
 $('.btn').on("click", function () {
     var userChosenColor = $(this).attr('id')
     userClickedPattern.push(userChosenColor)
+    checkAnswer(level)
     // debugger;
 
 
@@ -26,11 +28,11 @@ $('.btn').on("click", function () {
         fillGamePattern()
         console.log("gamePattern " + gamePattern);
         //w tym miejscu 2 kolory, showing last element
-        $("h1").text("Level 2")
+        $("h1").text("Level " + level)
         $("#" + gamePattern[gamePattern.length - 1]).animate({ opacity: 0.1 }, "slow")
         $("#" + gamePattern[gamePattern.length - 1]).animate({ opacity: 1 }, "slow")
         console.log("userClickedPattern " + userClickedPattern);
-
+        nextLevel()
     } else { $("h1").text("Game Over") }
 })
 
@@ -38,6 +40,10 @@ $('.btn').on("click", function () {
 
 function generateRandomNumber() {
     return Math.round(Math.random() * 3)
+}
+
+function nextLevel() {
+    level = level + 1;
 }
 
 function fillGamePattern() {
@@ -57,8 +63,11 @@ function arraysAreEqual(array1, array2) {
     }
     return true;
 }
-
-
+function checkAnswer(currentLevel) {
+    if (gamePattern[currentLevel - 1] = userClickedPattern[currentLevel - 1]) {
+        console.log('true');
+    } else { console.log('wrong') }
+}
 
 // if (arraysAreEqual(gamePattern, userClickedPattern)) {
 
